@@ -4,31 +4,32 @@ exports.test = (req, res) => {
 
 exports.signup = async(req, res) => {
     const user = require('../model/users')
-    const header = req.body.header
-    const updateData = req.body.updateData
-    const { email, password } = header
-    user.findOneAndUpdate({
-        email: email,
-        password: password
-    }, updateData, { new: true })
+    const newData = req.body
+    const { username, password, email, height, weight } = newData
+    user.findOne({ email })
         .then((response) => {
             if (response) {
                 res.send({
-                    message: "success"
+                    message: "User is already existed"
                 })
             } else {
-                res.send({
-                    message: "Email or password is not correct."
-                })
+                const newUser = new user(newData)
+                newUser.save()
+                    .then(() => {
+                        res.send({
+                            message: "success"
+                        })
+                    })
+                    .catch((err) => {
+                        console.log("err: ", err)
+                    })
             }
         })
-        .catch((err) => {
-            console.log(err)
-        });
+
 }
 
 exports.signupUpdate = async (req, res) => {
-    const user = require('../model/user')
+    const user = require('../model/users')
     const header = req.body.header
     const updateData = req.body.updateData
     const { email, password } = header

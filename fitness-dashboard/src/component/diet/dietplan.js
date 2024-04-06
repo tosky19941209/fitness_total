@@ -40,7 +40,7 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
 
     useEffect(() => {
         if (dietPlan.year === '') return
-
+        setBtnEnable(true);
         const localEmail = localStorage.getItem("fitnessemail")
         const localPassword = localStorage.getItem("fitnesspassword")
         const header = {

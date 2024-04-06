@@ -133,6 +133,14 @@ exports.getDietPlan = async (req, res) => {
         },
     ]);
 
+    // console.log(resultDietMenu.length)
+    if( resultDietMenu.length === 0) {
+        res.send({
+            message: "ExercisePlan is not exist"
+        })
+        return
+    }
+
     const dietMenu = {
         foodName: resultDietMenu[0].foodName,
         kcal: resultDietMenu[0].kcal,

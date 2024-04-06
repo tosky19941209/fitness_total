@@ -72,7 +72,7 @@ function Camera({ setStateResultData, stateResultData, exerciseResult, setExerci
         if (landmark) {
             let state_pose = true
 
-            for (let i = 0; i < 33; i++) {
+            for (let i = 0; i < 3; i++) {
                 if (landmark[i].x > 1 ||
                     landmark[i].x < 0 ||
                     landmark[i].y > 1 ||

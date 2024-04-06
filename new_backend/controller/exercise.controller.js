@@ -1,9 +1,14 @@
 exports.setExerciseLogs = async (req, res) => {
+
+    console.log("exercise is up to day")
+
     const logs = require('../model/logs')
     const user = require('../model/users')
     const newData = req.body
     const header = newData.header
     const updateData = newData.updateData
+
+    console.log(updateData)
     const { email, password } = header
 
     let state = true

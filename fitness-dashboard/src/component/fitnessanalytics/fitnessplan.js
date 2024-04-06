@@ -43,7 +43,6 @@ function FitnessPlan({ planData, setPlanData, email, password }) {
             }
         }
         const apiData = { header: header, updateData: updateData }
-        console.log("setExercisePlan: ", apiData)
         api.post('/exercise/setexercise', apiData)
             .then((res) => {
             })

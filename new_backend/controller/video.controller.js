@@ -1,7 +1,6 @@
 exports.video_load = async (req, res) => {
     const path = require("path")
     const data = req.query
-    console.log(data)
     const category = data.category
     const exercise = data.exercise
     const index = data.index

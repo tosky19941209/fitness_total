@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 function DietCalendar({ dietPlan, setDietPlan, btnEnable, setBtnEnable }) {
 
     const daysOfWeek = [
@@ -62,7 +64,7 @@ function DietCalendar({ dietPlan, setDietPlan, btnEnable, setBtnEnable }) {
                                     day: index
                                 }
                                 setDietPlan(newData)
-                                setBtnEnable(true)
+                                // setBtnEnable(true)
                             }}
                         >
                             <div className={`flex flex-col justify-center items-center w-[100%] h-[70%] ${btnEnable === false ? '' : 'bg-[#F1EEF6]'} duration-300`}>

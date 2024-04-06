@@ -13,7 +13,7 @@ module.exports = () => {
     app.use(express.json());
     // app.use(bodyParser.json());
     // app.use(bodyParser.urlencoded({ limit: "1mb", extended: true }));
-    app.use(morgan("dev_morgan"))
+    // app.use(morgan("dev_morgan"))
 
     routers.map(router => {
         // console.log("1: ", router)

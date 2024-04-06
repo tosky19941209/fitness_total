@@ -28,7 +28,6 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
     useEffect(() => {
         const localEmail = localStorage.getItem("fitnessemail")
         const localPassword = localStorage.getItem("fitnesspassword")
-        console.log("sign in request")
         api.get('/admin/signin', { params: { email: localEmail, password: localPassword } })
             .then((res) => {
                 const newData = res.data

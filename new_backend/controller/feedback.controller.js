@@ -2,10 +2,9 @@ exports.setFeedback = async (req, res) => {
     const header = req.body.header
     const updateData = req.body.updateData
     const { email, password } = header
-    const feedback = require('../model/feeback')
+    const feedback = require('../model/feedback')
     const users = require("../model/users")
     const resultUser = await users.findOne({ email: email, password: password })
-
     if (resultUser === null) return
     const newFeedback = new feedback({
         userid: resultUser._id,
