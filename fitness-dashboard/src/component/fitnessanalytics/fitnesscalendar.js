@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-function FitnessCalendar({ planData, setPlanData }) {
+function FitnessCalendar({ planData, setPlanData,enableBtn, setEnableBtn }) {
     const daysOfWeek = [
         'Sun',
         'Mon',
@@ -50,6 +50,7 @@ function FitnessCalendar({ planData, setPlanData }) {
             {
                 daysOfWeek.map((item, index) => (
                     <button className={`flex justify-center items-center w-[15%] h-[60%] ${index === accidentID ? 'bg-[#5534A5]' : ''} rounded-lg mr-1 ml-1 duration-500 hover:shadow-2xl`}
+                        disabled={!enableBtn}
                         onClick={(e) => {
                             setAccidentID(index)
                             const newData = {
@@ -60,8 +61,9 @@ function FitnessCalendar({ planData, setPlanData }) {
                                 day: index
                             }
                             setPlanData(newData)
+                            setEnableBtn(false)
                         }}>
-                        <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col justify-center items-center ">
                             <p className={`${index === accidentID ? 'text-[white]' : 'text-[black]'} text-[17px] mt-[50%]`}>{month[index] + "/" + date[index]}</p>
                             <p className={`${index === accidentID ? 'text-[white]' : 'text-[#757575]'} text-[13px] mt-[-20%]`}>{item}</p>
                         </div>

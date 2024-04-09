@@ -90,7 +90,7 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
                 </div>
             </div>
 
-            <div className="flex justify-end absolute z-10 w-[90%] h-[1%] mt-[15%]">
+            <div className="flex justify-end absolute z-10 w-[90%] h-[1%] mt-[10%]">
                 {
                     showWidget &&
                     <div className="flex flex-col justify-center items-center 

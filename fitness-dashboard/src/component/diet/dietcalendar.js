@@ -53,7 +53,7 @@ function DietCalendar({ dietPlan, setDietPlan, btnEnable, setBtnEnable }) {
                 {
                     daysOfWeek.map((item, index) => (
                         <button disabled={btnEnable} className={`flex justify-center items-center w-[40%] h-[70%] ${index === accidentID ? 'bg-[#5534A5]' : 'bg-[white]'} 
-                    border rounded-lg mr-1 ml-1 duration-500 hover:shadow-2xl min-[300px]:mt-[2%]`}
+                            border rounded-lg mr-1 ml-1 duration-500 hover:shadow-2xl min-[300px]:mt-[2%]`}
                             onClick={(e) => {
                                 setAccidentID(index)
                                 const newData = {
@@ -64,7 +64,7 @@ function DietCalendar({ dietPlan, setDietPlan, btnEnable, setBtnEnable }) {
                                     day: index
                                 }
                                 setDietPlan(newData)
-                                // setBtnEnable(true)
+                                setBtnEnable(true)
                             }}
                         >
                             <div className={`flex flex-col justify-center items-center w-[100%] h-[70%] ${btnEnable === false ? '' : 'bg-[#F1EEF6]'} duration-300`}>

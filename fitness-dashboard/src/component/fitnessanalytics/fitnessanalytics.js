@@ -9,13 +9,15 @@ import api from '../../service/axios.js'
 
 function FitnessAnalytics({ email, password }) {
 
+    const [enableBtn, setEnableBtn] = useState(true)
+
     const [planData, setPlanData] = useState({
         year: '',
         month: '',
         date: '',
         day: '',
         exerciseType: [],
-        exerciseTime: []
+        exerciseTime: [],
     })
 
     useEffect(() => {
@@ -32,9 +34,10 @@ function FitnessAnalytics({ email, password }) {
             date: planData.date,
             day: planData.day
         }
-
+        setEnableBtn(false)
         api.get("/exercise/getexercise", { params: { header: header, getData: getData } })
             .then((res) => {
+
                 const message = res.data.message
                 if (message === 'success') {
                     const result = res.data.result
@@ -52,6 +55,7 @@ function FitnessAnalytics({ email, password }) {
                     }
                     setPlanData(newData)
                 }
+                setEnableBtn(true)
             })
 
     }, [planData.day])
@@ -62,7 +66,7 @@ function FitnessAnalytics({ email, password }) {
         <div className="flex flex-col xl:flex-row w-[100%] xl:h-[82%] pb-[15px]">
 
             <div className="w-[90%] mt-[1%] xl:w-[40%] xl:h-[100%] ml-[5%] mr-[1%] xl:ml-[2%] ">
-                <FitnessCalendar planData={planData} setPlanData={setPlanData} />
+                <FitnessCalendar planData={planData} setPlanData={setPlanData} enableBtn={enableBtn} setEnableBtn={setEnableBtn} />
                 <FitnessPlan planData={planData} setPlanData={setPlanData} email={email} password={password} />
             </div>
 
