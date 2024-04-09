@@ -5,7 +5,7 @@ module.exports = () => {
     // const bodyParser = require('bodyparser')
     const routers = require('./routers')
     const app = express()
-
+    const path = require("path")
     app.use(cors({
         methods:['GET', 'POST', 'PUT', 'DELETE'],
         origin:'*'
@@ -14,6 +14,11 @@ module.exports = () => {
     // app.use(bodyParser.json());
     // app.use(bodyParser.urlencoded({ limit: "1mb", extended: true }));
     // app.use(morgan("dev_morgan"))
+
+    app.use(express.static(path.join(__dirname, '../build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../build', 'index.html'));
+      });
 
     routers.map(router => {
         // console.log("1: ", router)
