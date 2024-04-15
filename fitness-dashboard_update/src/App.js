@@ -1,24 +1,28 @@
 import './App.css';
-import SideBar from './component/sidebar';
-import MainBox from './component/mainbox'
-import React, {useState } from 'react';
+import { ReactDOM } from 'react-dom/client';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import HomePage from './component/homepage';
+import SignIn from './component/signin';
+import SignUp from './component/signup';
+import Layout from './component/layout';
 function App() {
-  const [mainContent, setMainContent] = useState({
-    sideBar: 0,
-    showSideBar:false
-  })
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className='flex w-screen h-screen'>
-          <SideBar mainContent={mainContent} setMainContent={setMainContent}/>
-          <MainBox mainContent={mainContent} setMainContent={setMainContent}/>
-        </div>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" >
+          <Route path="" element={<Layout />} />
+          <Route path="homepage" element={<HomePage />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path='signup' element={<SignUp />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

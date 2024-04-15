@@ -54,7 +54,6 @@ exports.signupUpdate = async (req, res) => {
 }
 
 exports.signin = async (req, res) => {
-    console.log("received")
     const users = require('../model/users')
     const newData = req.query
     const { email, password } = newData

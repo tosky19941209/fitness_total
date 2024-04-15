@@ -1,0 +1,3 @@
+/fitness_dashboard/node_modules
+/new_backend/node_modules
+/fitness-dashboard_update/node_modules
