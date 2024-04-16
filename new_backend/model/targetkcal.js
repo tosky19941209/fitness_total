@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const targetKcal = mongoose.Schema({
+const targetKcal = new mongoose.Schema({
     userid: {
         type: mongoose.mongo.ObjectId,
         required: false
