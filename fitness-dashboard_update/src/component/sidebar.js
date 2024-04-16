@@ -22,8 +22,8 @@ function SideBar({ mainContent, setMainContent }) {
         const newData = { ...mainContent, showSideBar: !showSideBarState }
         setMainContent(newData)
         setSideBar(!showSideBarState)
-        const email = localStorage.getItem("fitnessemail")
-        if (email) {
+        const token = localStorage.getItem("token")
+        if (token) {
             setAccidentID(index)
             const newData = { ...mainContent, sideBar: index }
             setMainContent(newData)

@@ -1,4 +1,5 @@
 const getToken = require("../other/gettoken")
+const verifyToken = require("../other/verifytoken")
 exports.test = (req, res) => {
     res.send("Welcome to fitness 1.3")
 }
@@ -75,5 +76,6 @@ exports.signin = async (req, res) => {
 }
 
 exports.signinWithToken = async (req, res) => {
-    res.send("success")
+    console.log(req.query)
+    res.send("OK")
 }

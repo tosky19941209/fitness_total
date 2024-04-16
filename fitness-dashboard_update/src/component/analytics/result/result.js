@@ -29,8 +29,11 @@ function Result({ setStateResultData, stateResultData, exerciseResult, setExerci
             email: localStorage.getItem('fitnessemail'),
             password: localStorage.getItem('fitnesspassword')
         }
+        const config = {
+            header: localStorage.getItem("token")
+        }
         const updateData = exerciseResult
-        api.post('/exercise/setlogs', { header: header, updateData: updateData })
+        api.post('/exercise/setlogs', { header: header, updateData: updateData }, )
             .then((res) => {
                 if (res.data.message === 'success')
                     toastr.success("Save successfully!")

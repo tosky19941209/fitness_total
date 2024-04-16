@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import api from '../service/axios'
 import toastr from 'toastr';
-
+import { useNavigate } from "react-router-dom";
 function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex }) {
     const content = [
         'OverView',
@@ -18,31 +18,31 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
     const [avatarName, setAvatarName] = useState('Log in')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const navigate = useNavigate()
     const handeKeyPress = (event) => {
         if (event.key === 'Enter') {
             signInBtn.current.click()
         }
     }
     let loginstate = false
-    useEffect(() => {
-        const localEmail = localStorage.getItem("fitnessemail")
-        const localPassword = localStorage.getItem("fitnesspassword")
-        api.get('/admin/signin', { params: { email: localEmail, password: localPassword } })
-            .then((res) => {
-                const newData = res.data
-                if (newData.message === 'success') {
-                    const name = newData.name
-                    setAvatarName(name)
-                    if (!loginstate)
-                        toastr.success("Welcome to fitness")
-                    loginstate = true
-                }
-            })
-            .catch((err) => {
-                console.log("err: ", err)
-            })
-    }, [])
+    // useEffect(() => {
+    //     const localEmail = localStorage.getItem("fitnessemail")
+    //     const localPassword = localStorage.getItem("fitnesspassword")
+    //     api.get('/admin/signin', { params: { email: localEmail, password: localPassword } })
+    //         .then((res) => {
+    //             const newData = res.data
+    //             if (newData.message === 'success') {
+    //                 const name = newData.name
+    //                 setAvatarName(name)
+    //                 if (!loginstate)
+    //                     toastr.success("Welcome to fitness")
+    //                 loginstate = true
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log("err: ", err)
+    //         })
+    // }, [])
 
 
     const SignIn = async (e) => {
@@ -81,56 +81,19 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
                 <div className="flex flex-col">
                     <div className="flex  items-center mr-10">
                         <button onClick={(e) => {
-                            showWidget === true ? setShowWidget(false) : setShowWidget(true)
+                            // showWidget === true ? setShowWidget(false) : setShowWidget(true)
+                            navigate("/signin")
                         }}
                         ><img className="border rounded-[50%] hidden md:block " src={avatarSrc} width="80px"></img></button>
-                        <p className="text-[#757575] ml-10" onClick={(e) => setShowWidget(!showWidget)}>{avatarName}</p>
+                        <p className="text-[#757575] ml-10"
+                            onClick={() => {
+                                navigate("/signin")
+                            }}>
+                            {avatarName}
+                        </p>
                     </div>
 
                 </div>
-            </div>
-
-            <div className="flex justify-end absolute z-10 w-[90%] h-[1%] mt-[10%]">
-                {
-                    showWidget &&
-                    <div className="flex flex-col justify-center items-center 
-                                    w-[90%] h-[250px] mr-[1%] mt-[0%] 
-                                    md:w-[40%] md:mt-[-5%] md:mr-[-5%] 
-                                    xl:w-[30%] xl:mr-[20%] xl:mt-[-8%] border rounded-xl bg-[#F1EEF6] shadow-xl">
-                        <div className="flex flex-col w-[90%] h-[80%] justify-center">
-
-                            <p className="text-[black] text-left text-[20px]">Email</p>
-                            <input value={email} className="form-control text-[black] mt-[-3%]"
-                                onChange={(e) => {
-                                    setEmail(e.target.value)
-                                }}></input>
-
-                            <p className="text-[black] text-left text-[20px]">Password</p>
-                            <input value={password} onKeyPress={handeKeyPress} type="password" className="form-control text-[black] mt-[-3%]"
-                                onChange={(e) => {
-                                    setPassword(e.target.value)
-                                }}></input>
-
-                            <div className="flex justify-between mt-3">
-
-                                <button ref={signInBtn} className="text-[#5534A5] text-[15px] ml-10 hover:bg-[#5534A5] hover:text-[white] duration-500 border rounded-[40px] w-[30%] h-[40px]"
-                                    onClick={SignIn}>
-                                    Sign in
-                                </button>
-
-                                <button className="text-[#5534A5] text-[15px] mr-10 hover:bg-[#5534A5] hover:text-[white] duration-500 border rounded-[40px] w-[30%] h-[40px]"
-                                    onClick={(e) => {
-                                        setShowWidget(false)
-                                        localStorage.clear()
-                                        setAvatarName('Log in')
-                                        setSideBarIndex(0)
-                                    }}>
-                                    Sign Out
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     )
