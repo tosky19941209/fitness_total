@@ -1,3 +1,4 @@
+const getToken = require("../other/gettoken")
 exports.test = (req, res) => {
     res.send("Welcome to fitness 1.3")
 }
@@ -25,7 +26,6 @@ exports.signup = async(req, res) => {
                     })
             }
         })
-
 }
 
 exports.signupUpdate = async (req, res) => {
@@ -58,10 +58,11 @@ exports.signin = async (req, res) => {
     const newData = req.query
     const { email, password } = newData
     users.findOne({ email, password })
-        .then((result) => {
-            if (result) {
+        .then((user) => {
+            if (user) {
                 res.json({
                     name: result.username,
+                    token: getToken(user),
                     message: "success"
                 })
             } else {
@@ -71,4 +72,8 @@ exports.signin = async (req, res) => {
                 })
             }
         })
+}
+
+exports.signinWithToken = async (req, res) => {
+
 }

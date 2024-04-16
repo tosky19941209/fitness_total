@@ -1,6 +1,6 @@
 module.exports = () => {
     const mongoose = require("mongoose")
-    const config = require("../env/config")
+    const config = require("../other/config")
 
     mongoose.connect(config.mongodb)
     .then(result => {

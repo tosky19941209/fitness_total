@@ -3,7 +3,7 @@ const LocalStrategy = require("passport-local")
 const JwtStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const DataCtrl = require("../controller/database.controller")
-const config = require("../env/config")
+const config = require("../other/config")
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
@@ -51,11 +51,7 @@ module.exports = () => {
         )
     )
 
-
     console.log("passport is running")
-
-
-
 
 }
 
