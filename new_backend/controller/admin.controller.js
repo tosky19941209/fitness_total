@@ -61,7 +61,7 @@ exports.signin = async (req, res) => {
         .then((user) => {
             if (user) {
                 res.json({
-                    name: result.username,
+                    name: user.username,
                     token: getToken(user),
                     message: "success"
                 })
@@ -75,5 +75,5 @@ exports.signin = async (req, res) => {
 }
 
 exports.signinWithToken = async (req, res) => {
-
+    res.send("success")
 }
