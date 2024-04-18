@@ -17,6 +17,11 @@ function FitnessPlan({ planData, setPlanData, email, password }) {
     const [showWidget, setShowWidget] = useState(false);
     const [updateSignal, setUpdateSignal] = useState(0)
 
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
     useEffect(() => {
         setDailyPlanExercise(planData.exerciseType)
         setDailyPlanTime(planData.exerciseTime)
@@ -42,9 +47,10 @@ function FitnessPlan({ planData, setPlanData, email, password }) {
                 exerciseTime: dailyPlanTime
             }
         }
-        const apiData = { header: header, updateData: updateData }
-        api.post('/exercise/setexercise', apiData)
+        const apiData = { updateData: updateData }
+        api.post('/exercise/setexercise', apiData, config)
             .then((res) => {
+                console.log("Exercie is sended")
             })
     }, [updateSignal])
 

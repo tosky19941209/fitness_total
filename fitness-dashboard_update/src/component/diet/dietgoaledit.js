@@ -3,6 +3,11 @@ import api from "../../service/axios";
 function DietGoalEdit(props) {
     const [targetKcal, setTargetKcal] = useState(0)
     const [senderCheck, setSenderCheck] = useState(false)
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
     const setSaveTargetKcal = () => {
         const header = {
             email: localStorage.getItem('fitnessemail'),
@@ -12,7 +17,10 @@ function DietGoalEdit(props) {
             targetKcal: targetKcal
         }
         setSenderCheck(false)
-        api.post('/diet/settargetkcal', { header: header, updateData: updateData })
+
+
+
+        api.post('/diet/settargetkcal', { updateData: updateData }, config)
         .then((res) => {
                 setSenderCheck(true)
                 console.log("ok")
@@ -25,7 +33,7 @@ function DietGoalEdit(props) {
             email: localStorage.getItem('fitnessemail'),
             password: localStorage.getItem('fitnesspassword')
         }
-        api.get('/diet/gettargetkcal', { params: { header: header } })
+        api.get('/diet/gettargetkcal', config)
             .then((res) => {
                 if (res.data.message === 'success') {
                     setTargetKcal(res.data.result.targetKcal)

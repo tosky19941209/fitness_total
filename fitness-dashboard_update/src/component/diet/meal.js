@@ -36,7 +36,11 @@ function Meal({ title, meal, amount, index, dietPlan, setDietPlan, updateWeeklyS
         return String(mineral[foodNames.indexOf(food)])
     }
 
-
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
 
     useEffect(() => {
         setAddFood(dietPlan.dietMenu.foodName[0])
@@ -299,8 +303,8 @@ function Meal({ title, meal, amount, index, dietPlan, setDietPlan, updateWeeklyS
             amount: updateAmount
         }
 
-        const apiData = { header: header, updateData: updateData }
-        api.post('/diet/setdiet', apiData)
+        const apiData = { updateData: updateData }
+        api.post('/diet/setdiet', apiData, config)
             .then((res) => {
                 console.log("signal")
                 setUpdateWeeklySignal(prev => prev + 1)

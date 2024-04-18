@@ -20,6 +20,11 @@ function FitnessAnalytics({ email, password }) {
         exerciseTime: [],
     })
 
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
     useEffect(() => {
         if (planData.year === '') return
         const localEmail = localStorage.getItem("fitnessemail")
@@ -35,10 +40,10 @@ function FitnessAnalytics({ email, password }) {
             day: planData.day
         }
         setEnableBtn(false)
-        api.get("/exercise/getexercise", { params: { header: header, getData: getData } })
+        api.post("/exercise/getexercise", { getData: getData }, config)
             .then((res) => {
-
                 const message = res.data.message
+                console.log("Message: ", message)
                 if (message === 'success') {
                     const result = res.data.result
                     const newData = {

@@ -10,6 +10,13 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("")
     const [isPassworCorrect, setIsPasswordCorrect] = useState(true)
+
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
+    
     const setHandle = (e) => {
         if (e.target.placeholder === "email")
             setEmail(e.target.value)

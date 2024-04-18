@@ -5,7 +5,12 @@ function Support() {
     const [hoverState, setHoverState] = useState(false)
     const [feedbackContent, setFeedBackContent] = useState('')
     const today = new Date()
-
+    
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
 
     const sendFeedBack = (e) => {
 
@@ -21,7 +26,7 @@ function Support() {
             minute: today.getMinutes(),
             feedback: feedbackContent
         }
-        api.post('/feedback/setfeedback', { header: header, updateData: updateData })
+        api.post('/feedback/setfeedback', { updateData: updateData }, config)
             .then((res) => {
                 if (res.data.message === 'success') {
                     setFeedBackContent('')

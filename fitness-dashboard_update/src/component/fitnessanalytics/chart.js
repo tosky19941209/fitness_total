@@ -12,7 +12,12 @@ function Chart() {
     const date = []
     const month = []
     const year = []
-
+    
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
     for (let i = 0; i < 7; i++) {
         const currentDate = new Date();
         const futureDate = new Date(currentDate.setDate(currentDate.getDate() - dayOfWeek + i));
@@ -32,7 +37,7 @@ function Chart() {
             month: month,
             date: date
         }
-        api.get('/exercise/getweeklyhistory', { params: { header: header, updateData: updateData } })
+        api.post('/exercise/getweeklyhistory', { updateData: updateData }, config)
             .then((res) => {
                 setHistory(res.data)
             })

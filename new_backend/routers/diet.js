@@ -6,9 +6,9 @@ const requireAuth = passport.authenticate("jwt", { session: false })
 router.post("/setdiet", requireAuth, dietCtrl.setDietPlan);
 router.post("/setdietmenu", requireAuth, dietCtrl.setDietMenu);
 router.post("/settargetkcal", requireAuth, dietCtrl.setTargetKcal);
-router.get("/getdiet", requireAuth, dietCtrl.getDietPlan);
-router.get("/getdietmenu", requireAuth, dietCtrl.getDietMenu);
-router.get("/getweeklytotaldata", requireAuth, dietCtrl.getWeeklyTotalData);
+router.post("/getdiet", requireAuth, dietCtrl.getDietPlan);
+router.post("/getdietmenu", requireAuth, dietCtrl.getDietMenu);
+router.post("/getweeklytotaldata", requireAuth, dietCtrl.getWeeklyTotalData);
 router.get("/gettargetkcal", requireAuth, dietCtrl.getTargetKcal);
 
 module.exports = router

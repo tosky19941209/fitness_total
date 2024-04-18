@@ -100,7 +100,13 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
         }
         let weeklytotalcal = 0
 
-        api.get('/diet/getweeklytotaldata', { params: { header: header, updateData: updateData } })
+        const config = {
+            headers: {
+                "authorization": localStorage.getItem("token")
+            }
+        }
+
+        api.post('/diet/getweeklytotaldata', { updateData: updateData } , config)
             .then((res) => {
                 res.data.result.map((item, i) => {
                     weeklytotalcal = weeklytotalcal + weeklyTotalCalcKcal(item._id)

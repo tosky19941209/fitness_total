@@ -1,147 +1,122 @@
+const verifyToken = require("../other/verifytoken")
+const logs = require('../model/logs')
+const user = require('../model/users')
+const exercise = require('../model/exercise')
+
 exports.setExerciseLogs = async (req, res) => {
 
-    console.log("exercise is up to day")
-
-    const logs = require('../model/logs')
-    const user = require('../model/users')
     const newData = req.body
-    const header = newData.header
+
     const updateData = newData.updateData
 
-    console.log(updateData)
-    const { email, password } = header
-
+    const userInfo = verifyToken(req.headers.authorization)
     let state = true
 
-    user.findOne({ email, password })
-        .then((result) => {
-            const newlog = new logs({
-                ...updateData,
-                userid: result._id
-            })
+    const newlog = new logs({
+        ...updateData,
+        userid: userInfo.id
+    })
 
-            newlog.save()
-                .then(() => {
-                    res.send({
-                        message: "success"
-                    })
-                })
+    newlog.save()
+        .then(() => {
+            res.send({
+                message: "success"
+            })
         })
 }
 
-exports.setExercisePlan =  (req, res) => {
-    const user = require('../model/users')
-    const exercise = require('../model/exercise')
+exports.setExercisePlan = async (req, res) => {
+
     const newData = req.body
-
-    // console.log(newData)
-
-    const header = newData.header
-    const { email, password } = header
     const updateData = newData.updateData
     if (updateData.year === '') return
-    user.findOne({ email: email, password: password })
-        .then(async (result) => {
-            if (result === null) {
-                res.send({
-                    message: "User is not registed."
-                })
-                return
-            }
+    const userInfo = verifyToken(req.headers.authorization)
+    let addStatus = null
+    console.log("UserID for Exercise: ", userInfo.id)
+    await exercise.find({ userid: userInfo.id })
+        .then((response) => {
+            console.log(response)
+            if (response.length === 0) {
+                addStatus = true
+            } else {
 
-            let addStatus = null
-            await exercise.find({ userid: result._id })
-                .then((response) => {
-                    if (response.length === 0) {
-                        addStatus = true
-                    } else {
+                addStatus = true
 
-                        addStatus = true
-
-                        const currentData = {
-                            year: String(updateData.year),
-                            month: String(updateData.month),
-                            date: String(updateData.date),
-                            day: String(updateData.day),
-                        }
-                        response.map((item, index) => {
-                            const existData = {
-                                year: item.year,
-                                month: item.month,
-                                date: item.date,
-                                day: item.day,
-                            }
-                            const string1 = JSON.stringify(existData)
-                            const string2 = JSON.stringify(currentData)
-                            if (string1 === string2) {
-                                addStatus = false
-                            }
-                        })
+                const currentData = {
+                    year: String(updateData.year),
+                    month: String(updateData.month),
+                    date: String(updateData.date),
+                    day: String(updateData.day),
+                }
+                response.map((item, index) => {
+                    const existData = {
+                        year: item.year,
+                        month: item.month,
+                        date: item.date,
+                        day: item.day,
+                    }
+                    const string1 = JSON.stringify(existData)
+                    const string2 = JSON.stringify(currentData)
+                    if (string1 === string2) {
+                        addStatus = false
                     }
                 })
-
-            if (addStatus === true) {
-                const newExercise = new exercise({
-                    userid: result._id,
-                    year: updateData.year,
-                    month: updateData.month,
-                    date: updateData.date,
-                    day: updateData.day,
-                    exerciseType: updateData.exerciseType
-                })
-                newExercise.save()
-                    .then(() => {
-                        res.send({
-                            message: "added"
-                        })
-                    })
-            }
-            else {
-                await exercise.findOneAndUpdate(
-                    {
-                        userid: result._id,
-                        year: updateData.year,
-                        month: updateData.month,
-                        date: updateData.date,
-                        day: updateData.day
-                    },
-                    updateData,
-                    { new: true })
-                    .then(() => {
-                        res.send({
-                            message: "Updated"
-                        })
-                    })
-                    .catch((err) => {
-                        res.send({
-                            message: "failed"
-                        })
-                    })
             }
         })
+
+    if (addStatus === true) {
+        const newExercise = new exercise({
+            userid: userInfo.id,
+            year: updateData.year,
+            month: updateData.month,
+            date: updateData.date,
+            day: updateData.day,
+            exerciseType: updateData.exerciseType
+        })
+        newExercise.save()
+            .then(() => {
+                res.send({
+                    message: "added"
+                })
+            })
+    }
+    else {
+        await exercise.findOneAndUpdate(
+            {
+                userid: userInfo.id,
+                year: updateData.year,
+                month: updateData.month,
+                date: updateData.date,
+                day: updateData.day
+            },
+            updateData,
+            { new: true })
+            .then(() => {
+                res.send({
+                    message: "Updated"
+                })
+            })
+            .catch((err) => {
+                res.send({
+                    message: "failed"
+                })
+            })
+    }
+
 }
 
 
 exports.getExercisePlan = async (req, res) => {
-    const header = req.query.header;
-    const getData = req.query.getData;
+    const getData = req.body.getData;
 
-    const exercise = require('../model/exercise');
-    const user = require('../model/users');
     if (getData.year === '') {
         return;
     }
-    let userid = '';
-    await user.findOne({ email: header.email })
-        .then(async (result) => {
-            if (result) {
-                userid = result._id;
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
+    // let userid = verifyToken(req.headers.authorization);
+    let userid = "";
+    const userInfo = verifyToken(req.headers.authorization)
+    console.log("userID: ", userInfo)
+    userid = userInfo.id
     if (userid === '')
         res.send({
             message: "ExercisePlan is not exist"
@@ -165,23 +140,20 @@ exports.getExercisePlan = async (req, res) => {
 
 
 exports.getWeeklyExerciseHistory = async (req, res) => {
-    const user = require('../model/users')
-    const logs = require('../model/logs')
 
-    const header = req.query.header
-    const updateData = req.query.updateData
-    const { email, password } = header
+    const updateData = req.body.updateData
+
     const year = updateData.year
     const month = updateData.month
     const date = updateData.date
 
-    const userlist = await user.findOne({ email: email, password: password })
+    const userInfo = verifyToken(req.headers.authorization)
 
 
     const result = await logs.aggregate([
         {
             $match: {
-                userid: userlist._id,
+                userid: userInfo.id,
                 $expr: {
                     $and: [
                         { $gte: [{ $toInt: "$year" }, Number(year[0])] },

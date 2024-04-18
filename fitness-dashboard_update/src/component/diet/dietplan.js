@@ -34,6 +34,12 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
         }
     })
 
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
+
     useEffect(() => {
         setdietCal(dietPlan)
     }, [dietPlan])
@@ -54,12 +60,7 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
             date: dietPlan.date,
             day: dietPlan.day
         }
-        api.get("/diet/getdiet", {
-            params: {
-                header: header,
-                getData: getData
-            }
-        }).then((res) => {
+        api.post("/diet/getdiet", { getData: getData }, config).then((res) => {
             setBtnEnable(false)
             const message = res.data.message
             const result = res.data.result
@@ -123,7 +124,7 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     return (
         <div className="border rounded-xl w-[100%] pb-[20px] mt-[2%] md:mt-[0px]">
             <DietCalendar dietPlan={dietPlan} setDietPlan={setDietPlan} btnEnable={btnEnable} setBtnEnable={setBtnEnable} />
-            <DietDaily dietPlan={dietPlan} setDietPlan={setDietPlan} updateWeeklySignal={updateWeeklySignal} setUpdateWeeklySignal={setUpdateWeeklySignal}/>
+            <DietDaily dietPlan={dietPlan} setDietPlan={setDietPlan} updateWeeklySignal={updateWeeklySignal} setUpdateWeeklySignal={setUpdateWeeklySignal} />
         </div>
     )
 

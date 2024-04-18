@@ -1,5 +1,6 @@
 const getToken = require("../other/gettoken")
 const verifyToken = require("../other/verifytoken")
+const ExtractJwt = require("passport-jwt").ExtractJwt
 exports.test = (req, res) => {
     res.send("Welcome to fitness 1.3")
 }
@@ -76,6 +77,7 @@ exports.signin = async (req, res) => {
 }
 
 exports.signinWithToken = async (req, res) => {
-    console.log(req.query)
-    res.send("OK")
+    
+    console.log("info123: ", verifyToken(req.headers.authorization))
+    res.send(req.body)
 }

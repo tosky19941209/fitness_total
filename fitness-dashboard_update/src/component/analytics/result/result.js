@@ -21,7 +21,12 @@ function Result({ setStateResultData, stateResultData, exerciseResult, setExerci
     const [se_kind_index, setKindIndex] = useState([])
     const [se_kind_category, setKindCategory] = useState([])
     const [se_kind_exercise, setKindExercise] = useState([])
-
+    
+    const config = {
+        headers: {
+            "authorization": localStorage.getItem("token")
+        }
+    }
     const setSaveExercise = (e) => {
         if (exerciseResult.durtime === '') return
         if (exerciseResult.index === '') return
@@ -29,11 +34,10 @@ function Result({ setStateResultData, stateResultData, exerciseResult, setExerci
             email: localStorage.getItem('fitnessemail'),
             password: localStorage.getItem('fitnesspassword')
         }
-        const config = {
-            header: localStorage.getItem("token")
-        }
+
+
         const updateData = exerciseResult
-        api.post('/exercise/setlogs', { header: header, updateData: updateData }, )
+        api.post('/exercise/setlogs', { updateData: updateData }, config)
             .then((res) => {
                 if (res.data.message === 'success')
                     toastr.success("Save successfully!")
@@ -80,7 +84,7 @@ function Result({ setStateResultData, stateResultData, exerciseResult, setExerci
             const new_data = { ...stateResultData, kind_exercise: json_exercsise }
             setStateResultData(new_data)
             if (exercise !== 'Select Exercise') {
-                api.get('/video/video_load', { params: { category: category, exercise: exercise, index: index }, responseType: 'blob' })
+                api.get('/video/video_load', { params: { category: category, exercise: exercise, index: index }, config, responseType: 'blob' })
                     .then(res => {
                         const blob = new Blob([res.data], { type: res.data.type });
                         setSampleVideo(URL.createObjectURL(blob));

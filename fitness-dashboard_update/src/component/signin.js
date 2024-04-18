@@ -11,11 +11,12 @@ function SignIn() {
             headers: {
                 "authorization": localStorage.getItem("token")
             }
-        }
-        api.get("/admin/signinWithToken", config)
+        };
+        
+        api.post("/admin/signinWithToken", {email:"qwer", name:"asdf"} , config)
             .then((res) => {
-                console.log(res.data)
-            }) 
+                console.log(res.data);
+        });
 
     // navigate("/signup")
 }

@@ -5,7 +5,7 @@ const requireAuth = passport.authenticate("jwt", {session: false})
 
 router.post("/setlogs", requireAuth, exerciseCtrl.setExerciseLogs);
 router.post("/setexercise", requireAuth, exerciseCtrl.setExercisePlan);
-router.get("/getexercise", requireAuth, exerciseCtrl.getExercisePlan)
-router.get("/getweeklyhistory", requireAuth, exerciseCtrl.getWeeklyExerciseHistory);
+router.post("/getexercise", requireAuth, exerciseCtrl.getExercisePlan)
+router.post("/getweeklyhistory", requireAuth, exerciseCtrl.getWeeklyExerciseHistory);
 
 module.exports = router;
