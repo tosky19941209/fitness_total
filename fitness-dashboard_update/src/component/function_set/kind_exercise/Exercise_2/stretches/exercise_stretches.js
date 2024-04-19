@@ -9,6 +9,7 @@ let state_counter = true
 let prevstatevalue = null
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const abdominal_stretch = (calc_data) => {
+
     const state_change_exercise = calc_data.state_change_exercise
     const pose_data = calc_data.pose_data
 
@@ -27,7 +28,9 @@ export const abdominal_stretch = (calc_data) => {
     const landmark3 = config.index_landmark.nose
 
     let angle_1 = Angle_3_point(pose_data, landmark1, landmark2, landmark3)
+
     let accuracy = 100 - (angle_1 - 12) * 100 / 12
+    console.log(accuracy)
     if (accuracy > 100) accuracy = 100
     else if (accuracy < 0) accuracy = 0
 
@@ -39,7 +42,6 @@ export const abdominal_stretch = (calc_data) => {
     else if (accuracy < min_score) {
         state_counter = false;
     }
-
     const new_accuracy = Number(accuracy.toFixed(decimal_point))
     return { accuracy: new_accuracy, counter: counter, state: state_change_exercise }
 }

@@ -20,7 +20,6 @@ module.exports = () => {
             },
             async (email, password, done) => {
                 try {
-                    console.log(email, password)
                     const user = await DataCtrl.search_email(email);
                     if (!user) return done(null, false)
                     const isMatch = await DataCtrl.match_password(email, password)
@@ -39,7 +38,6 @@ module.exports = () => {
             jwtOptions,
             async (payload, done) => {
                 try {
-                    console.log(payload.id)
                     const user = await DataCtrl.search_id(payload.id)
                     if(!user) return done(null, user)
                     return done(null, user)

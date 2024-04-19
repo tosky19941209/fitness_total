@@ -2,7 +2,9 @@ const verifyToken = require("../other/verifytoken")
 const logs = require('../model/logs')
 const user = require('../model/users')
 const exercise = require('../model/exercise')
-
+const { copyFileSync } = require("fs")
+const { isObjectIdOrHexString } = require("mongoose")
+const mongoose = require("mongoose")
 exports.setExerciseLogs = async (req, res) => {
 
     const newData = req.body
@@ -32,10 +34,8 @@ exports.setExercisePlan = async (req, res) => {
     if (updateData.year === '') return
     const userInfo = verifyToken(req.headers.authorization)
     let addStatus = null
-    console.log("UserID for Exercise: ", userInfo.id)
     await exercise.find({ userid: userInfo.id })
         .then((response) => {
-            console.log(response)
             if (response.length === 0) {
                 addStatus = true
             } else {
@@ -115,7 +115,6 @@ exports.getExercisePlan = async (req, res) => {
     // let userid = verifyToken(req.headers.authorization);
     let userid = "";
     const userInfo = verifyToken(req.headers.authorization)
-    console.log("userID: ", userInfo)
     userid = userInfo.id
     if (userid === '')
         res.send({
@@ -148,12 +147,12 @@ exports.getWeeklyExerciseHistory = async (req, res) => {
     const date = updateData.date
 
     const userInfo = verifyToken(req.headers.authorization)
-
-
+    id = new mongoose.Types.ObjectId(userInfo.id);
+    
     const result = await logs.aggregate([
         {
             $match: {
-                userid: userInfo.id,
+                userid: id,
                 $expr: {
                     $and: [
                         { $gte: [{ $toInt: "$year" }, Number(year[0])] },
@@ -181,6 +180,7 @@ exports.getWeeklyExerciseHistory = async (req, res) => {
         },
         { $sort: { "_id.year": -1, "_id.month": -1, "_id.date": -1 } }
     ])
+
 
     res.send(result);
 }

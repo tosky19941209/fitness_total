@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-function FitnessCalendar({ planData, setPlanData,enableBtn, setEnableBtn }) {
+function FitnessCalendar({ planData, setPlanData,enableBtn, setEnableBtn, signal, setSignal }) {
     const daysOfWeek = [
         'Sun',
         'Mon',
@@ -62,6 +62,7 @@ function FitnessCalendar({ planData, setPlanData,enableBtn, setEnableBtn }) {
                             }
                             setPlanData(newData)
                             setEnableBtn(false)
+                            setSignal(prev => prev + 1)
                         }}>
                         <div className="flex flex-col justify-center items-center ">
                             <p className={`${index === accidentID ? 'text-[white]' : 'text-[black]'} text-[17px] mt-[50%]`}>{month[index] + "/" + date[index]}</p>

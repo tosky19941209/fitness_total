@@ -89,10 +89,6 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
         if (dietCal === null) return
         setDailyTotalKcal(calc_DailyTotalKcal(dietCal))
 
-        const header = {
-            email: localStorage.getItem('fitnessemail'),
-            password: localStorage.getItem('fitnesspassword')
-        }
         const updateData = {
             year: year,
             month: month,
@@ -107,8 +103,8 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
         }
 
         api.post('/diet/getweeklytotaldata', { updateData: updateData } , config)
-            .then((res) => {
-                res.data.result.map((item, i) => {
+            .then( async (res) => {
+                await res.data.result.map((item, i) => {
                     weeklytotalcal = weeklytotalcal + weeklyTotalCalcKcal(item._id)
                 })
                 setWeeklyTotalKcal(weeklytotalcal)

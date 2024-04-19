@@ -72,21 +72,23 @@ function Camera({ setStateResultData, stateResultData, exerciseResult, setExerci
         if (landmark) {
             let state_pose = true
 
-            for (let i = 0; i < 3; i++) {
-                if (landmark[i].x > 1 ||
-                    landmark[i].x < 0 ||
-                    landmark[i].y > 1 ||
-                    landmark[i].y < 0)
-                    state_pose = false
-            }
+            // for (let i = 0; i < 5; i++) {
+            //     if (landmark[i].x > 1 ||
+            //         landmark[i].x < 0 ||
+            //         landmark[i].y > 1 ||
+            //         landmark[i].y < 0)
+            //         state_pose = false
+            // }
             if (state_pose === true) {
                 const new_calc_data = {
                     pose_data: results,
                     kind_exercise: stateResultData.kind_exercise,
                     state_change_exercise: state_change_exercise
                 }
-                // const result = Analysis_exercise(new_calc_data)
-                setCalcResult(Analysis_exercise(new_calc_data));
+                const result = Analysis_exercise(new_calc_data)
+                setCalcResult(result)
+                // console.log(result)
+                // setCalcResult(Analysis_exercise(new_calc_data));
             }
             else {
                 setTipSpeaker("Your entire body must be in camera")

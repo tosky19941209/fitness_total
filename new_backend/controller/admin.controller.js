@@ -77,7 +77,5 @@ exports.signin = async (req, res) => {
 }
 
 exports.signinWithToken = async (req, res) => {
-    
-    console.log("info123: ", verifyToken(req.headers.authorization))
     res.send(req.body)
 }

@@ -5,7 +5,7 @@ import api from '../../service/axios.js'
 function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
 
     const [btnEnable, setBtnEnable] = useState(false)
-
+    const [signal, setSignal] = useState(0)
     const [dietPlan, setDietPlan] = useState({
         year: '',
         month: '',
@@ -43,7 +43,9 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     useEffect(() => {
         setdietCal(dietPlan)
     }, [dietPlan])
-
+    useEffect(() => {
+        setSignal(prev => prev + 1)
+    }, [])
     useEffect(() => {
         if (dietPlan.year === '') return
         setBtnEnable(true);
@@ -119,11 +121,11 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
             }
         })
 
-    }, [dietPlan.day])
+    }, [signal])
 
     return (
         <div className="border rounded-xl w-[100%] pb-[20px] mt-[2%] md:mt-[0px]">
-            <DietCalendar dietPlan={dietPlan} setDietPlan={setDietPlan} btnEnable={btnEnable} setBtnEnable={setBtnEnable} />
+            <DietCalendar dietPlan={dietPlan} setDietPlan={setDietPlan} btnEnable={btnEnable} setBtnEnable={setBtnEnable} signal={signal} setSignal={setSignal} />
             <DietDaily dietPlan={dietPlan} setDietPlan={setDietPlan} updateWeeklySignal={updateWeeklySignal} setUpdateWeeklySignal={setUpdateWeeklySignal} />
         </div>
     )

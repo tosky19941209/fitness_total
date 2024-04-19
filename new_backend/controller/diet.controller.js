@@ -3,7 +3,7 @@ const user = require('../model/users')
 const diet = require('../model/diet')
 const dietMenu = require('../model/dietmenu')
 const targetkcalModel = require('../model/targetkcal')
-
+const mongoose = require("mongoose")
 exports.setDietPlan = async (req, res) => {
 
     const newData = req.body
@@ -120,10 +120,10 @@ exports.getDietPlan = async (req, res) => {
     const getData = req.body.getData;
     const userInfo = verifyToken(req.headers.authorization)
 
-
     if (getData.year === '') {
         return;
     }
+
     let userid = userInfo.id;
     const dietMenuModel = require('../model/dietmenu')
 
@@ -140,7 +140,6 @@ exports.getDietPlan = async (req, res) => {
         },
     ]);
 
-    // console.log(resultDietMenu.length)
     if( resultDietMenu.length === 0) {
         res.send({
             message: "ExercisePlan is not exist"
@@ -165,7 +164,6 @@ exports.getDietPlan = async (req, res) => {
     //     .catch(error => {
     //         console.error(error);
     //     });
-
 
         const result = await diet.find({ userid: userid, year: getData.year, month: getData.month, date: getData.date })
         if (result.length !== 0) {
@@ -215,7 +213,7 @@ exports.setDietMenu = async (req, res) => {
 
 exports.getDietMenu = async (req, res) => {
     const dietMenu = require('../model/dietmenu')
-
+    console.log("IJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     const result = await dietMenu.aggregate([
         {
             $match:
@@ -255,11 +253,11 @@ exports.getWeeklyTotalData = async (req, res) => {
     const date = updateData.date
 
     const userInfo = verifyToken(req.headers.authorization)
-    
+    id = new mongoose.Types.ObjectId(userInfo.id)
     const result = await diet.aggregate([
         {
             $match: {
-                userid: userInfo.id,
+                userid: id,
                 $expr: {
                     $and: [
                         { $gte: [{ $toInt: "$year" }, Number(year[0])] },
@@ -342,7 +340,6 @@ exports.setTargetKcal = async ( req, res ) => {
         })
         setTargetKcal.save()
             .then(() => {
-                console.log("success")
             })
     }
     else {
