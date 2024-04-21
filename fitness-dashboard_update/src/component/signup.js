@@ -41,7 +41,6 @@ function SignUp() {
 
         api.post("/admin/signup", { email: email, password: password })
             .then(res => {
-                console.log(res.data)
                 if (res.data.message === 'success') {
                     toastr.success("Successfull")
                     navigate("/signin")

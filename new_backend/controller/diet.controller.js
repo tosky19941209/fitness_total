@@ -3,7 +3,7 @@ const user = require('../model/users')
 const diet = require('../model/diet')
 const dietMenu = require('../model/dietmenu')
 const targetkcalModel = require('../model/targetkcal')
-
+const mongoose = require("mongoose")
 exports.setDietPlan = async (req, res) => {
 
     const newData = req.body
@@ -254,11 +254,11 @@ exports.getWeeklyTotalData = async (req, res) => {
     const date = updateData.date
 
     const userInfo = verifyToken(req.headers.authorization)
-    
+    id = new mongoose.Types.ObjectId(userInfo.id)
     const result = await diet.aggregate([
         {
             $match: {
-                userid: userInfo.id,
+                userid: id,
                 $expr: {
                     $and: [
                         { $gte: [{ $toInt: "$year" }, Number(year[0])] },

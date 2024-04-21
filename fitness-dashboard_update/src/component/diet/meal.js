@@ -306,7 +306,6 @@ function Meal({ title, meal, amount, index, dietPlan, setDietPlan, updateWeeklyS
         const apiData = { updateData: updateData }
         api.post('/diet/setdiet', apiData, config)
             .then((res) => {
-                console.log("signal")
                 setUpdateWeeklySignal(prev => prev + 1)
 
             })
@@ -355,7 +354,6 @@ function Meal({ title, meal, amount, index, dietPlan, setDietPlan, updateWeeklyS
 
                         }}
                         onChange={(e) => {
-                            // console.log(e.target.selectedIndex)
                             setAddFood(foodNames[e.target.selectedIndex])
                         }}>
                         {

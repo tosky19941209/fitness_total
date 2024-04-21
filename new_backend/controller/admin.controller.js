@@ -1,8 +1,10 @@
 const getToken = require("../other/gettoken")
 const verifyToken = require("../other/verifytoken")
 const ExtractJwt = require("passport-jwt").ExtractJwt
+
 exports.test = (req, res) => {
     res.send("Welcome to fitness 1.3")
+    console.log("Test")
 }
 
 exports.signup = async(req, res) => {
@@ -56,6 +58,7 @@ exports.signupUpdate = async (req, res) => {
 }
 
 exports.signin = async (req, res) => {
+    console.log("Signin")
     const users = require('../model/users')
     const newData = req.query
     const { email, password } = newData

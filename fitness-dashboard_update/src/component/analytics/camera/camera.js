@@ -87,7 +87,6 @@ function Camera({ setStateResultData, stateResultData, exerciseResult, setExerci
                 }
                 const result = Analysis_exercise(new_calc_data)
                 setCalcResult(result)
-                // console.log(result)
                 // setCalcResult(Analysis_exercise(new_calc_data));
             }
             else {

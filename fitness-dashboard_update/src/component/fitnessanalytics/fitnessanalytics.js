@@ -40,7 +40,6 @@ function FitnessAnalytics({ email, password }) {
         api.post("/exercise/getexercise", { getData: getData }, config)
             .then((res) => {
                 const message = res.data.message
-                console.log("Message: ", message)
                 if (message === 'success') {
                     const result = res.data.result
                     const newData = {

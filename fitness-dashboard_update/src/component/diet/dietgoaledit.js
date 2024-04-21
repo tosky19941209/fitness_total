@@ -23,7 +23,6 @@ function DietGoalEdit(props) {
         api.post('/diet/settargetkcal', { updateData: updateData }, config)
         .then((res) => {
                 setSenderCheck(true)
-                console.log("ok")
                 props.setTargetKcal(targetKcal)
             })
     }

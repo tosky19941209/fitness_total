@@ -18,32 +18,30 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
     const [avatarName, setAvatarName] = useState('Log in')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isLogin, setLogin] = useState(false)
     const navigate = useNavigate()
     const handeKeyPress = (event) => {
         if (event.key === 'Enter') {
             signInBtn.current.click()
         }
     }
-    let loginstate = false
-    // useEffect(() => {
-    //     const localEmail = localStorage.getItem("fitnessemail")
-    //     const localPassword = localStorage.getItem("fitnesspassword")
-    //     api.get('/admin/signin', { params: { email: localEmail, password: localPassword } })
-    //         .then((res) => {
-    //             const newData = res.data
-    //             if (newData.message === 'success') {
-    //                 const name = newData.name
-    //                 setAvatarName(name)
-    //                 if (!loginstate)
-    //                     toastr.success("Welcome to fitness")
-    //                 loginstate = true
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log("err: ", err)
-    //         })
-    // }, [])
 
+    useEffect(() => {
+        const username = localStorage.getItem("username")
+        if (username === null)
+            setAvatarName("Log in")
+        else {
+            setAvatarName(username)
+            setLogin(true)
+        }
+    }, [])
+
+    const SignOut = () => {
+        localStorage.clear()
+        setLogin(false)
+        setAvatarName("Log in")
+        setSideBarIndex(0)
+    }
 
     const SignIn = async (e) => {
         await api.get('/admin/signin', { params: { email: email, password: password } })
@@ -91,6 +89,12 @@ function Header({ sideBarIndex, headerContent, setHeaderContent, setSideBarIndex
                             }}>
                             {avatarName}
                         </p>
+                        {   isLogin && 
+                            <p className="text-[#757575] ml-10"
+                                onClick={SignOut}>
+                                Sign out
+                            </p>
+                        }
                     </div>
 
                 </div>

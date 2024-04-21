@@ -37,10 +37,6 @@ function MainBox({ mainContent, setMainContent }) {
         setMainContent(newData)
     }
 
-    // useEffect(() => {
-    //     console.log(mainContent.showSideBar)
-    // }, [mainContent.showSideBar])
-
 
     return (
         <div className="w-[100%] xl:w-[100%] h-[full] xl:ml-5"

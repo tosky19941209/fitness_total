@@ -47,12 +47,7 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     useEffect(() => {
         if (dietPlan.year === '') return
         setBtnEnable(true);
-        const localEmail = localStorage.getItem("fitnessemail")
-        const localPassword = localStorage.getItem("fitnesspassword")
-        const header = {
-            email: localEmail,
-            password: localPassword
-        }
+
 
         const getData = {
             year: dietPlan.year,
@@ -120,6 +115,10 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
         })
 
     }, [signal])
+
+    useEffect(() => {
+        setSignal(prev => prev + 1)
+    }, [])
 
     return (
         <div className="border rounded-xl w-[100%] pb-[20px] mt-[2%] md:mt-[0px]">

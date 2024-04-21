@@ -30,7 +30,6 @@ export const abdominal_stretch = (calc_data) => {
     let angle_1 = Angle_3_point(pose_data, landmark1, landmark2, landmark3)
 
     let accuracy = 100 - (angle_1 - 12) * 100 / 12
-    console.log(accuracy)
     if (accuracy > 100) accuracy = 100
     else if (accuracy < 0) accuracy = 0
 

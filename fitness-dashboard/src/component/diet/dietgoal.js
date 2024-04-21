@@ -8,7 +8,7 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     const [dailyTotalKcal, setDailyTotalKcal] = useState(0)
     const [weeklyTotalKcal, setWeeklyTotalKcal] = useState(0)
     const [targetKcal, setTargetKcal] = useState(0)
-
+    console.log("OK!!!!!!!!!!!!!")
     const calc_kcal = (foodName, dietMenu) => {
         return dietMenu.kcal[dietMenu.foodName.indexOf(foodName)]
     }
@@ -86,6 +86,7 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     }
 
     useEffect(() => {
+        console.log("OK!!!!!!!!!!!!!")
         if (dietCal === null) return
         setDailyTotalKcal(calc_DailyTotalKcal(dietCal))
 
@@ -102,6 +103,7 @@ function DietGoal({ dietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
 
         api.get('/diet/getweeklytotaldata', { params: { header: header, updateData: updateData } })
             .then((res) => {
+                console.log("res:", res.data)
                 res.data.result.map((item, i) => {
                     weeklytotalcal = weeklytotalcal + weeklyTotalCalcKcal(item._id)
                 })

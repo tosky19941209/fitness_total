@@ -8,7 +8,7 @@ const adminCtrl = require("../controller/admin.controller")
 router.get("/test", adminCtrl.test);
 router.post("/signup", adminCtrl.signup);
 router.post("/signupUpdate", adminCtrl.signupUpdate);
-router.get("/signin", requireSignin, adminCtrl.signin);
+router.get("/signin", adminCtrl.signin);
 router.post("/signinWithToken", requireAuth ,adminCtrl.signinWithToken)
 
 

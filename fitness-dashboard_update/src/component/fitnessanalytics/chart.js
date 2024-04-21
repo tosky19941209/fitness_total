@@ -39,7 +39,6 @@ function Chart() {
         }
         api.post('/exercise/getweeklyhistory', { updateData: updateData }, config)
             .then((res) => {
-                console.log("weekly is :", res.data)
                 setHistory(res.data)
             })
     }, [])
