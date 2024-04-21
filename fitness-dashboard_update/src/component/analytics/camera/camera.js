@@ -284,9 +284,13 @@ function Camera({ setStateResultData, stateResultData, exerciseResult, setExerci
                             }
                             catch (err) {
                                 alert("Camera is not connected")
+                                setCamBtnClassName('btn_camera')
+                                setCamBtnSVGClassName('svg_css')
+                                setWebCamEnable(false)
                             }
 
-                            iswebcamEnable === true ? setWebCamEnable(false) : setWebCamEnable(true)
+                            if( iswebcamEnable ) setWebCamEnable(false)
+                            // iswebcamEnable === true ? setWebCamEnable(false) : setWebCamEnable(true)
                             // if (cambtn_classname === 'btn_camera') {
                             //     setCamBtnClassName('btn_camera_active')
                             //     setWebCamEnable(true)
