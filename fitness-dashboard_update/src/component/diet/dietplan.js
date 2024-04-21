@@ -43,9 +43,7 @@ function DietPlan({ setdietCal, updateWeeklySignal, setUpdateWeeklySignal }) {
     useEffect(() => {
         setdietCal(dietPlan)
     }, [dietPlan])
-    useEffect(() => {
-        setSignal(prev => prev + 1)
-    }, [])
+
     useEffect(() => {
         if (dietPlan.year === '') return
         setBtnEnable(true);

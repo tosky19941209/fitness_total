@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DietGoal from './dietgoal.js'
 import DietPlan from './dietplan.js'
 function Main() {
     const [dietCal, setdietCal] = useState(null)
     const [updateWeeklySignal, setUpdateWeeklySignal] = useState(0)
-    useEffect(() => {
-        console.log(dietCal)
-    }, [dietCal])
     return (
         <div className="w-[95%] h-[100%] pb-[20px]">
             <DietGoal dietCal={dietCal} updateWeeklySignal={updateWeeklySignal} setUpdateWeeklySignal={setUpdateWeeklySignal} />
