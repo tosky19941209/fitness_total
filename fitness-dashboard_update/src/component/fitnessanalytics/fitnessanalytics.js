@@ -6,6 +6,7 @@ import TotalTime from './totaltime'
 import TotalProgress from "./totalprogress";
 import Chart from "./chart";
 import api from '../../service/axios.js'
+import { setSelectionRange } from "@testing-library/user-event/dist/utils/index.js";
 
 function FitnessAnalytics({ email, password }) {
 
@@ -61,7 +62,10 @@ function FitnessAnalytics({ email, password }) {
 
     }, [ signal])
 
-
+    useEffect(() => {
+        console.log("OK!!!!!!!!")
+        setSignal(prev => prev + 1)
+    }, [])
 
     return (
         <div className="flex flex-col xl:flex-row w-[100%] xl:h-[82%] pb-[15px]">
