@@ -1,7 +1,7 @@
 import './App.css';
 import { ReactDOM } from 'react-dom/client';
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import Layout from './component/layout';
 function App() {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" >
           <Route path="" element={<Layout />} />
@@ -21,7 +21,7 @@ function App() {
           <Route path='signup' element={<SignUp />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
