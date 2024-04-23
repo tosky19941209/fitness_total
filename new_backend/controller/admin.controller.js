@@ -1,13 +1,29 @@
 const getToken = require("../other/gettoken")
 const verifyToken = require("../other/verifytoken")
 const ExtractJwt = require("passport-jwt").ExtractJwt
-
+const nodemailer = require("nodemailer")
 exports.test = (req, res) => {
     res.send("Welcome to fitness 1.3")
-    console.log("Test")
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user:"warrytomas51@gmail.com",
+            pass: "tlkwjdqhd"
+        }
+    })
+
 }
 
-exports.signup = async(req, res) => {
+exports.relic = (req, res) => {
+
+    const logdata = req.body.logdata
+
+    res.send("Relic")
+
+}
+
+exports.signup = async (req, res) => {
     const user = require('../model/users')
     const newData = req.body
     const { username, password, email, height, weight } = newData
