@@ -1,27 +1,56 @@
 const getToken = require("../other/gettoken")
 const verifyToken = require("../other/verifytoken")
 const ExtractJwt = require("passport-jwt").ExtractJwt
-const nodemailer = require("nodemailer")
+
+// Function to send an email
+const nodemailer = require('nodemailer');
+
+// Function to send an email
+function sendEmail(fromEmail, toEmail, subject, text, callback) {
+  // Create a Nodemailer transporter using Gmail
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'felixeliass@gmail.com',
+      pass: 'tlkwjdqhd' // Enter your Gmail account password here
+    }
+  });
+
+  // Set up the email message
+  let mailOptions = {
+    from: fromEmail,
+    to: toEmail,
+    subject: subject,
+    text: text
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      callback(error, null);
+    } else {
+      console.log('Email sent: ' + info.response);
+      callback(null, info.response);
+    }
+  });
+}
+
 exports.test = (req, res) => {
-    res.send("Welcome to fitness 1.3")
+  const fromEmail = 'felixeliass1994@gmail.com';
+  const toEmail = 'warrytomas51@gmail.com';
+  const subject = 'Test Email';
+  const text = 'Hello, this is a test email!';
 
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user:"warrytomas51@gmail.com",
-            pass: "tlkwjdqhd"
-        }
-    })
+  sendEmail(fromEmail, toEmail, subject, text, (err, message) => {
+    if (err) {
+      res.status(500).send('Error sending email');
+    } else {
+      res.send('Email sent successfully');
+    }
+  });
+};
 
-}
-
-exports.relic = (req, res) => {
-
-    const logdata = req.body.logdata
-
-    res.send("Relic")
-
-}
 
 exports.signup = async (req, res) => {
     const user = require('../model/users')

@@ -12,6 +12,8 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "emailjs": "^4.0.3",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "method-override": "^3.0.0",
